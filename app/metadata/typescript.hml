@@ -1,0 +1,119 @@
+kind: DataConnectorLink
+version: v1
+definition:
+  name: typescript
+  url:
+    readWriteUrls:
+      read:
+        valueFromEnv: APP_TYPESCRIPT_READ_URL
+      write:
+        valueFromEnv: APP_TYPESCRIPT_WRITE_URL
+  headers:
+    Authorization:
+      valueFromEnv: APP_TYPESCRIPT_AUTHORIZATION_HEADER
+  schema:
+    version: v0.2
+    schema:
+      collections: []
+      functions: []
+      object_types:
+        PersonOrgDoc:
+          description: This function queries Azure AI Search for docs matching a given name.
+          fields:
+            addresses:
+              type:
+                name: String
+                type: named
+            aliases:
+              type:
+                name: String
+                type: named
+            birth_date:
+              type:
+                name: String
+                type: named
+            countries:
+              type:
+                name: String
+                type: named
+            dataset:
+              type:
+                name: String
+                type: named
+            emails:
+              type:
+                name: String
+                type: named
+            first_seen:
+              type:
+                name: String
+                type: named
+            id:
+              type:
+                name: String
+                type: named
+            identifiers:
+              type:
+                name: String
+                type: named
+            last_change:
+              type:
+                name: String
+                type: named
+            last_seen:
+              type:
+                name: String
+                type: named
+            name:
+              type:
+                name: String
+                type: named
+            phones:
+              type:
+                name: String
+                type: named
+            sanctions:
+              type:
+                name: String
+                type: named
+            schema:
+              type:
+                name: String
+                type: named
+          foreign_keys: {}
+        searchByName_output:
+          fields:
+            results:
+              type:
+                element_type:
+                  name: PersonOrgDoc
+                  type: named
+                type: array
+          foreign_keys: {}
+      procedures:
+        - arguments:
+            name:
+              type:
+                type: nullable
+                underlying_type:
+                  name: String
+                  type: named
+          name: searchByName
+          result_type:
+            name: searchByName_output
+            type: named
+      scalar_types:
+        String:
+          aggregate_functions: {}
+          comparison_operators:
+            _eq:
+              type: equal
+          representation:
+            type: string
+    capabilities:
+      capabilities:
+        mutation: {}
+        query:
+          nested_fields: {}
+          variables: {}
+      version: 0.2.0

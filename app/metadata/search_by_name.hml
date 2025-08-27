@@ -1,0 +1,121 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: person_org_doc
+  description: This function queries Azure AI Search for docs matching a given name.
+  fields:
+    - name: addresses
+      type: String!
+    - name: aliases
+      type: String!
+    - name: birth_date
+      type: String!
+    - name: countries
+      type: String!
+    - name: dataset
+      type: String!
+    - name: emails
+      type: String!
+    - name: first_seen
+      type: String!
+    - name: id
+      type: String!
+    - name: identifiers
+      type: String!
+    - name: last_change
+      type: String!
+    - name: last_seen
+      type: String!
+    - name: name
+      type: String!
+    - name: phones
+      type: String!
+    - name: sanctions
+      type: String!
+    - name: schema
+      type: String!
+  graphql:
+    typeName: person_org_doc
+    inputTypeName: person_org_doc_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: typescript
+      dataConnectorObjectType: PersonOrgDoc
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: person_org_doc
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - addresses
+          - aliases
+          - birth_date
+          - countries
+          - dataset
+          - emails
+          - first_seen
+          - id
+          - identifiers
+          - last_change
+          - last_seen
+          - name
+          - phones
+          - sanctions
+          - schema
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: search_by_name_output
+  fields:
+    - name: results
+      type: "[person_org_doc!]!"
+  graphql:
+    typeName: search_by_name_output
+    inputTypeName: search_by_name_output_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: typescript
+      dataConnectorObjectType: searchByName_output
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: search_by_name_output
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - results
+
+---
+kind: Command
+version: v1
+definition:
+  name: search_by_name
+  outputType: search_by_name_output!
+  arguments:
+    - name: name
+      type: String
+  source:
+    dataConnectorName: typescript
+    dataConnectorCommand:
+      procedure: searchByName
+  graphql:
+    rootFieldName: search_by_name
+    rootFieldKind: Mutation
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: search_by_name
+  permissions:
+    - role: admin
+      allowExecution: true
+
